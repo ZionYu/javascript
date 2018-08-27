@@ -72,14 +72,61 @@ class Hero extends BaseCharacter {
     this.updateHtml(this.hpElement, this.hurtElement);
   }
   //把負責生命值的 element 傳給 updateHTML 方法
-  heal() {
-   this.hp = this.hp + 30;
-   if (this.hp > this.maxHp) {
-    this.hp = this.maxHp;
-   }
-   this.updateHtml(this.hpElement, this.hurtElement); 
+  heal() {//新增 heal 方法
+   
+   if (this.hp + 30 <= this.maxHp) {
+    this.hp = this.hp + 30;
+    this.updateHtml(this.hpElement, this.hurtElement);
+    var _this = this;
+    var i = 1;
 
-  }//新增 heal 方法
+    _this.id = setInterval(function() {
+      if (i == 1) {
+        _this.element.getElementsByClassName("heal-text")[0].classList.add("healed");
+        _this.element.getElementsByClassName("heal-text")[0].textContent = 30;
+      }
+      i++;
+      //加入傷害數字
+      if (i > 8) {
+        
+        _this.element.getElementsByClassName("heal-text")[0].classList.remove("healed");
+        _this.element.getElementsByClassName("heal-text")[0].textContent = "";
+        clearInterval(_this.id);
+      }
+      //取消傷害數字
+
+    },50);
+   } else {
+    this.hp = this.maxHp;
+    this.updateHtml(this.hpElement, this.hurtElement);
+
+    var _this = this;
+    var i = 1;
+
+    _this.id = setInterval(function() {
+      if (i == 1) {
+        _this.element.getElementsByClassName("heal-text")[0].classList.add("healed");
+        _this.element.getElementsByClassName("heal-text")[0].textContent = 30;
+      }
+      i++;
+      //加入傷害數字
+      if (i > 8) {
+        
+        _this.element.getElementsByClassName("heal-text")[0].classList.remove("healed");
+        _this.element.getElementsByClassName("heal-text")[0].textContent = "";
+        clearInterval(_this.id);
+      }
+      //取消傷害數字
+
+    },50);
+   }
+    
+
+
+   
+    
+  
+  }
   
 }
 
@@ -108,7 +155,7 @@ class Monster extends BaseCharacter {
 }
 
 var hero = new Hero("QQ", 130, 30);
-var monster = new Monster("BB", 130, 20);
+var monster = new Monster("BB", 130, 60);
 
 //設定戰鬥的開始和結束
 
