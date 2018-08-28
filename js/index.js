@@ -169,7 +169,14 @@ function addSkillEvent() {
   skill.onclick = function() {
     heroAttack();
   }
-  
+
+  document.onkeyup = function(event) {
+    var key = String.fromCharCode(event.keyCode);
+    if (key == "A") {
+      heroAttack(); 
+    } 
+  }
+
 }
 addSkillEvent();
 
@@ -177,6 +184,13 @@ function addHealEvent() {
   var heal = document.getElementById("heal");
   heal.onclick = function() {
     heroHeal();
+  }
+
+  document.onkeydown = function(event) {
+    var key = String.fromCharCode(event.keyCode);
+    if (key == "S") {
+      heroHeal(); 
+    } 
   }
 }
 addHealEvent();//設定恢復按鈕的事件驅動
