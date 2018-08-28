@@ -82,18 +82,21 @@ class Hero extends BaseCharacter {
 
     _this.id = setInterval(function() {
       if (i == 1) {
+        _this.element.getElementsByClassName("effect-image")[0].style.display = "block";
         _this.element.getElementsByClassName("heal-text")[0].classList.add("healed");
         _this.element.getElementsByClassName("heal-text")[0].textContent = 30;
       }
+      _this.element.getElementsByClassName("effect-image")[0].src = "images/effect/heal/" + i + ".png"
       i++;
-      //加入傷害數字
+    
       if (i > 8) {
-        
+        _this.element.getElementsByClassName("effect-image")[0].style.display = "none";
         _this.element.getElementsByClassName("heal-text")[0].classList.remove("healed");
         _this.element.getElementsByClassName("heal-text")[0].textContent = "";
         clearInterval(_this.id);
+        
       }
-      //取消傷害數字
+     
 
     },50);
    } else {
@@ -224,7 +227,28 @@ function heroAttack() {
 }
 
 function heroHeal() {
+  document.getElementsByClassName("skill-block")[0].style.display = "none";
   hero.heal();
+  setTimeout(function(){
+    document.getElementsByClassName("skill-block")[0].style.display = "block";
+    setTimeout(function(){
+    if (monster.alive) {
+      monster.element.classList.add("attacking");
+      setTimeout(function(){
+        monster.attack(hero);
+        monster.element.classList.remove("attacking");
+        endTurn();
+        if (hero.alive == false) {
+          finish();
+        }else{
+          document.getElementsByClassName("skill-block")[0].style.display = "block";
+        }
+      },500)
+    } else{
+      finish();
+    }
+  },100);
+  },500)
 }
 
 
